@@ -1,0 +1,43 @@
+.header {
+	width: 100%;
+	background-color: #fff;
+}
+
+.header__inner {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header__title {
+	margin: 0;
+	font-size: 50px;
+	font-weight: 300;
+	color: #000;
+	text-transform: uppercase;
+}
+
+.header__title_red {
+	color: #fd5433;
+}
+
+.header__menu {
+	display: flex;
+	text-transform: uppercase;
+}
+
+.menu__item {
+	cursor: pointer;
+	padding: 10px 20px;
+	transition: all 0.4s ease-in 0s;
+}
+
+.menu__item:hover {
+	color: #fd5433;
+}

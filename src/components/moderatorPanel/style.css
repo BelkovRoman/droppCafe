@@ -1,0 +1,48 @@
+.modPanel-header {
+	width: 100%;
+	background-color: #fff;
+}
+
+.modPanel-header__inner {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: flex;
+	justify-content: start;
+}
+
+.modPanel-header__title {
+	margin: 0;
+	font-size: 50px;
+	font-weight: 300;
+	color: #000;
+	text-transform: uppercase;
+}
+
+.modPanel-header__title_red {
+	color: #fd5433;
+}
+
+.modPanel__title {
+  font-size: 22px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.modPanel__content {
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modPanel__invite {
+  display: flex;
+}
+
+.invite__item {
+  margin-right: 10px;
+}
