@@ -4,6 +4,7 @@ This app is a test-quest.
 ## Technologies
 1. React, react-router on client-side
 2. CouchDB-cli on server-side
+3. Developed and tested for desktop Google Chrome(last version)
 
 ## How to launch
 1. Download ZIP-file and extract or clone through git
