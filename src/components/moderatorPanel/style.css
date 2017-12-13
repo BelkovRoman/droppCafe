@@ -46,3 +46,7 @@
 .invite__item {
   margin-right: 10px;
 }
+
+.invite__image {
+  max-width: 150px;
+}

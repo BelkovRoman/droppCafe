@@ -41,22 +41,22 @@ export default class ModeratorPanel extends Component {
               return (
                 <div key={ index } className="modPanel__invite">
                   <div className="invite__item invite__name">
-                    { invite.doc.invite.name }
+                    { invite.doc.name }
                   </div>
                   <div className="invite__item invite__surname">
-                    { invite.doc.invite.surname }
+                    { invite.doc.surname }
                   </div>
                   <div className="invite__item invite__phone">
-                    { invite.doc.invite.phone }
+                    { invite.doc.phone }
                   </div>
                   <div className="invite__item invite__email">
-                    { invite.doc.invite.email }
-                  </div>
-                  <div className="invite__item invite__image">
-                    { invite.doc.invite.image }
+                    { invite.doc.email }
                   </div>
                   <div className="invite__item invite__message">
-                    { invite.doc.invite.message }
+                    { invite.doc.message }
+                  </div>
+                  <div className="invite__item">
+                    <img class="invite__image" id={ index } src={ invite.doc.image } alt="user avatar"/>
                   </div>
                 </div>
               )

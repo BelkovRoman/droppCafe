@@ -10,6 +10,7 @@ export default class Contacts extends Component {
     surname: 'asd',
     phone: '+9(999)999-9999',
     email: 'example@gmail.com',
+    image: '',
     message: 'asdasd'
   }
 
@@ -18,8 +19,19 @@ export default class Contacts extends Component {
       message: this.state.message.trim()
     })
 
-    invites.sendData({ invite: { ...this.state } })
+    invites.sendData({ ...this.state })
     e.preventDefault()
+  }
+
+  handleFileLoad = (e) => {
+    let file = e.target.files[0]
+    let reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      let fileInfo = reader.result
+
+      this.changeFormData('image', fileInfo)
+    }
   }
 
   changeFormData = (key, value) => {
@@ -61,7 +73,12 @@ export default class Contacts extends Component {
                 />
               </div>
             </div>
-
+            <div className="contacts-card__inner">
+              <label className="contacts-card__field file-field">
+                <input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" onChange={ this.handleFileLoad.bind(this) } />
+                Click to upload some avatar
+              </label>
+            </div>
             <div className="contacts-card__inner">
               <textarea className="contacts-card__field message-field" onChange={ (e) => this.changeFormData('message', e.target.value) }
                 name="message" placeholder="Describe yourself" required='true' value={ message }
