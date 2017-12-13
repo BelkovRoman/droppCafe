@@ -45,6 +45,17 @@
 	background-position: center center;
 }
 
+.contacts-card__inner_checking {
+	justify-content: flex-start;
+	align-items: center;
+	color: #fff;
+	user-select: none;
+}
+
+.contacts-card__capcha {
+	margin-left: 20px;
+}
+
 .contacts-card__field {
 	box-sizing: border-box;
 	border: none;

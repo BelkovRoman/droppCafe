@@ -6,42 +6,84 @@ import './style.css'
 
 export default class Contacts extends Component {
   state = {
-    name: 'asd',
-    surname: 'asd',
-    phone: '+9(999)999-9999',
-    email: 'example@gmail.com',
-    image: '',
-    message: 'asdasd'
+    data: {
+      name: 'asd',
+      surname: 'asd',
+      phone: '+9(999)999-9999',
+      email: 'example@gmail.com',
+      image: '',
+      message: 'asdasd'
+    },
+    imgError: false,
+    isSended: false
   }
 
   handleSubmit = (e) => {
+    const isAllOk = !this.state.data.imgError && this.state.data.image !== ''
+
     this.setState({
-      message: this.state.message.trim()
+      data: {
+        ...this.state.data,
+        message: this.state.data.message.trim()
+      },
+      isSended: isAllOk
     })
 
-    invites.sendData({ ...this.state })
+    if (isAllOk) {
+      invites.sendData({ ...this.state.data })
+      setTimeout(() => {
+        this.setState({
+          isSended: false
+        })
+      }, 2000)
+    }
     e.preventDefault()
   }
 
   handleFileLoad = (e) => {
-    let file = e.target.files[0]
-    let reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => {
-      let fileInfo = reader.result
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    const i = new Image()
 
-      this.changeFormData('image', fileInfo)
+    let params = {}
+    let err = false
+
+    reader.readAsDataURL(file)
+
+    reader.onload = () => {
+      i.src = reader.result
+      i.onload = () => {
+        params = {
+          width: i.width,
+          height: i.height
+        }
+
+        if (params.height < 501 && params.width < 501) {
+          this.changeFormData('image', reader.result)
+          err = false
+        } else {
+          err = true
+        }
+
+        this.setState({
+          imgError: err
+        })
+      }
     }
   }
 
   changeFormData = (key, value) => {
     this.setState({
-      [key]:  key === 'name' || key === 'surname' ? value.trim() : value
+      data: {
+        ...this.state.data,
+        [key]:  key === 'name' || key === 'surname' ? value.trim() : value
+      }
     })
   }
 
   render () {
-    const { name, surname, phone, email, message } = this.state
+    const { name, surname, phone, email, message, image } = this.state.data
+    const { imgError, isSended } = this.state
 
     return (
       <section id="contacts" className="contacts">
@@ -60,14 +102,14 @@ export default class Contacts extends Component {
             </div>
             <div className="contacts-card__inner">
               <div className="contacts-card__item name-field">
-                <span className="contacts-card__tip">Пример: +9(999)999-9999</span>
+                <span className="contacts-card__tip">For example: +9(999)999-9999</span>
                 <input className="contacts-card__field name-field__item" onChange={ (e) => this.changeFormData('phone', e.target.value) }
                   name="phone" placeholder="Phone number here" type="tel" required='true' pattern="[\+]\d{1}[\(]\d{3}[\)]\d{3}[\-]\d{4}" value={ phone }
                 />
               </div>
 
               <div className="contacts-card__item email-field">
-                <span className="contacts-card__tip">Пример: example@gmail.com</span>
+                <span className="contacts-card__tip">For example: example@gmail.com</span>
                 <input className="contacts-card__field email-field__item" onChange={ (e) => this.changeFormData('email', e.target.value) }
                   name="email" placeholder="Email address here"  type="email" required='true' value={ email }
                 />
@@ -76,7 +118,11 @@ export default class Contacts extends Component {
             <div className="contacts-card__inner">
               <label className="contacts-card__field file-field">
                 <input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" onChange={ this.handleFileLoad.bind(this) } />
-                Click to upload some avatar
+                {
+                  imgError ?
+                  'Image must be 500x500! Try again!' :
+                  (image !== '' ? 'Image was uploaded!' : 'Click to upload some avatar')
+                }
               </label>
             </div>
             <div className="contacts-card__inner">
@@ -84,11 +130,16 @@ export default class Contacts extends Component {
                 name="message" placeholder="Describe yourself" required='true' value={ message }
               ></textarea>
             </div>
-            <div className="">
-              <span className="contacts-card__tip">Вы не робот?</span>
-              <input type="checkbox" required='true' />
+            <div className="contacts-card__inner contacts-card__inner_checking">
+              <span>Are you robot?</span>
+              <div className="contacts-card__capcha">
+                <input type="checkbox" required='true' />
+                <span>I'm mr.robot</span>
+              </div>
             </div>
-            <button className="contacts__button">SEND MESSAGE NOW</button>
+            <button className="contacts__button">
+            { isSended ? 'MESSAGE SENDED!' : 'SEND MESSAGE NOW' }
+            </button>
           </form>
         </div>
         <div className="add-info">

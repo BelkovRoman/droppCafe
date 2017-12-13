@@ -29,17 +29,42 @@ export default class ModeratorPanel extends Component {
             <h1 className="modPanel-header__title">
               DR<span className="modPanel-header__title_red">0</span>PP
             </h1>
-            <Link to={`/`}>Назад</Link>
+            <nav className="header__menu">
+              <Link className="menu__item" to={`/`}>Get Back</Link>
+            </nav>
           </div>
         </header>
         <div className="modPanel__content">
           <h2 className="modPanel__title">
-            Заявки
+            Invites
           </h2>
+          <div className="modPanel__invite modPanel__tableHeader">
+            <div className="invite__item invite__image">
+              Avatar
+            </div>
+            <div className="invite__item invite__name">
+              Name
+            </div>
+            <div className="invite__item invite__surname">
+              Surname
+            </div>
+            <div className="invite__item invite__phone">
+              Phone number
+            </div>
+            <div className="invite__item invite__email">
+              Email
+            </div>
+            <div className="invite__item invite__message">
+              Comment
+            </div>
+          </div>
           {
             !!this.state.invites.rows ? this.state.invites.rows.map((invite, index) => {
               return (
                 <div key={ index } className="modPanel__invite">
+                  <div className="invite__item invite__image">
+                    <img id={ index } src={ invite.doc.image } alt="user avatar" />
+                  </div>
                   <div className="invite__item invite__name">
                     { invite.doc.name }
                   </div>
@@ -54,9 +79,6 @@ export default class ModeratorPanel extends Component {
                   </div>
                   <div className="invite__item invite__message">
                     { invite.doc.message }
-                  </div>
-                  <div className="invite__item">
-                    <img class="invite__image" id={ index } src={ invite.doc.image } alt="user avatar"/>
                   </div>
                 </div>
               )

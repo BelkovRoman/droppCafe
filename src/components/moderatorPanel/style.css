@@ -1,6 +1,11 @@
+.modPanel {
+	background-color: #1d1d1d;
+}
+
 .modPanel-header {
 	width: 100%;
 	background-color: #fff;
+	border-bottom: 1px solid #828282;
 }
 
 .modPanel-header__inner {
@@ -10,7 +15,8 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 	display: flex;
-	justify-content: start;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .modPanel-header__title {
@@ -33,20 +39,73 @@
   margin-bottom: 10px;
 }
 
+.menu__item {
+	cursor: pointer;
+	color: #000;
+	text-decoration: none;
+	padding: 10px 20px;
+	transition: all 0.4s ease-in 0s;
+}
+
+.menu__item:hover {
+	color: #fd5433;
+}
+
 .modPanel__content {
   width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+	color: #fff;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .modPanel__invite {
   display: flex;
+	align-items: center;
+	width: 100%;
+  height: 80px;
+	border-bottom: 1px solid #828282;
+}
+
+.modPanel__tableHeader {
+	height: 30px;
+}
+
+.modPanel__invite:last-child {
+	border-bottom: none;
 }
 
 .invite__item {
-  margin-right: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	white-space: nowrap;
+  overflow: hidden;
 }
 
 .invite__image {
-  max-width: 150px;
+	width: 10%;
+}
+
+.invite__image img{
+  max-width: 60px;
+	max-height: 60px;
+}
+
+.invite__name {
+	width: 10%;
+}
+
+.invite__surname {
+	width: 10%;
+}
+
+.invite__phone {
+	width: 20%;
+}
+
+.invite__email {
+	width: 20%;
+}
+
+.invite__message {
+	width: 20%;
 }
