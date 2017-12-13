@@ -8,7 +8,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  box-shadow: 0 0 0 400px rgba(0, 0, 0, 0.33) inset;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.33) inset;
 }
 
 .home__inner {
@@ -24,4 +24,5 @@
 .home__title {
   margin-bottom: 20px;
   font-size: 40px;
+  text-align: center;
 }

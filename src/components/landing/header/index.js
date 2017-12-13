@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import './style.css'
 
@@ -11,9 +12,7 @@ export default class Header extends Component {
             DR<span className="header__title_red">0</span>PP
           </h1>
           <nav className="header__menu">
-            <span className="menu__item">
-              Login
-            </span>
+            <Link className="menu__item" to={`/modpanel`}>Login</Link>
           </nav>
         </div>
       </header>

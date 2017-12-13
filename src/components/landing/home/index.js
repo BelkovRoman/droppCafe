@@ -9,6 +9,8 @@ export default class Home extends Component {
         <div className="home__inner">
           <h2 className="home__title">
             come, stay for a coffie!
+            <br/>
+            take a season ticket and get free donuts every weekend!
           </h2>
         </div>
       </section>

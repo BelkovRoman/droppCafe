@@ -23,6 +23,19 @@
 	margin-right: auto;
 }
 
+.contacts-card__item {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.contacts-card__tip {
+	color: #fff;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
 .contacts-card__inner {
   display: flex;
 	justify-content: space-between;
@@ -47,8 +60,16 @@
 	width: 40%;
 }
 
+.name-field__item {
+	width: 100%;
+}
+
 .email-field {
 	width: 57%;
+}
+
+.email-field__item {
+	width: 100%;
 }
 
 .message-field {

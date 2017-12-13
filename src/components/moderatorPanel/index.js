@@ -1,11 +1,27 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
-import invites from './invites.json'
+import invites from '../../api/invite.js'
 
 import './style.css'
 
 export default class ModeratorPanel extends Component {
+  state = {
+    invites: {}
+  }
+
+  initData = (data) => {
+    this.setState({
+      invites: data
+    })
+  }
+
+  componentDidMount() {
+    invites.getData(this.initData)
+  }
+
   render() {
+
     return (
       <div className="modPanel">
         <header className="modPanel-header">
@@ -13,6 +29,7 @@ export default class ModeratorPanel extends Component {
             <h1 className="modPanel-header__title">
               DR<span className="modPanel-header__title_red">0</span>PP
             </h1>
+            <Link to={`/`}>Назад</Link>
           </div>
         </header>
         <div className="modPanel__content">
@@ -20,30 +37,30 @@ export default class ModeratorPanel extends Component {
             Заявки
           </h2>
           {
-            invites.map((invite, index) => {
+            !!this.state.invites.rows ? this.state.invites.rows.map((invite, index) => {
               return (
-                <div className="modPanel__invite">
+                <div key={ index } className="modPanel__invite">
                   <div className="invite__item invite__name">
-                    { invite.name }
+                    { invite.doc.invite.name }
                   </div>
                   <div className="invite__item invite__surname">
-                    { invite.surname }
+                    { invite.doc.invite.surname }
                   </div>
                   <div className="invite__item invite__phone">
-                    { invite.phone }
+                    { invite.doc.invite.phone }
                   </div>
                   <div className="invite__item invite__email">
-                    { invite.email }
+                    { invite.doc.invite.email }
                   </div>
                   <div className="invite__item invite__image">
-                    { invite.image }
+                    { invite.doc.invite.image }
                   </div>
                   <div className="invite__item invite__message">
-                    { invite.message }
+                    { invite.doc.invite.message }
                   </div>
                 </div>
               )
-            })
+            }) : null
           }
         </div>
       </div>
