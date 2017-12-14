@@ -7,12 +7,12 @@ import './style.css'
 export default class Contacts extends Component {
   state = {
     data: {
-      name: 'asd',
-      surname: 'asd',
-      phone: '+9(999)999-9999',
-      email: 'example@gmail.com',
+      name: '',
+      surname: '',
+      phone: '',
+      email: '',
       image: '',
-      message: 'asdasd'
+      message: ''
     },
     imgError: false,
     isSended: false
