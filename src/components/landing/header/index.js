@@ -40,7 +40,7 @@ export default class Header extends Component {
               this.state.isLogInShowed ? <Link className="menu__item" to={`/modpanel`}>Get in!</Link> : (
                 this.state.isPassInputShowed ? <div>
                   <span className="menu__item">Пароль:</span>
-                  <input type="password" autoComplete="current-password" onKeyPress={ (e) => this.isPassCorrect(e) }/>
+                  <input type="password" autoComplete="current-password" onKeyPress={ (e) => this.isPassCorrect(e) } maxLength="20"/>
                 </div> : <span className="menu__item" onClick={ () => this.showPassInput() }>
                 Log in</span>
               )

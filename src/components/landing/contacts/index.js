@@ -63,6 +63,7 @@ export default class Contacts extends Component {
 
           if (params.height < 501 && params.width < 501) {
             this.changeFormData('image', reader.result)
+            alert('Message sended')
             err = false
           } else {
             err = true
@@ -78,6 +79,14 @@ export default class Contacts extends Component {
         imgError: true
       })
     }
+  }
+
+  alphaOnly = (value) => {
+    return /^[a-zA-Z]+$/.test(value)
+  }
+
+  numbOnly = (value) => {
+    return /^[1-9]+$/.test(value)
   }
 
   changeFormData = (key, value) => {
@@ -101,31 +110,31 @@ export default class Contacts extends Component {
         <div className="contacts__inner">
           <form className="contacts-card" onSubmit={ this.handleSubmit }>
             <div className="contacts-card__inner">
-              <input className="contacts-card__field name-field" onChange={ (e) => this.changeFormData('name', e.target.value) }
-                name="name" placeholder="Your name here" type="text" required='true' value={ name }
+              <input className="contacts-card__field name-field" onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('name', e.target.value) : {} }
+                name="name" placeholder="Your name" type="text" required='true' value={ name } maxLength="20"
               />
-              <input className="contacts-card__field email-field" onChange={ (e) => this.changeFormData('surname', e.target.value) }
-                name="surName" placeholder="Your surname here"  type="text" required='true' value={ surname }
+            <input className="contacts-card__field email-field" onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('surname', e.target.value) : {} }
+                name="surName" placeholder="Your surname"  type="text" required='true' value={ surname } maxLength="20"
               />
             </div>
             <div className="contacts-card__inner">
               <div className="contacts-card__item name-field">
                 <span className="contacts-card__tip">For example: +9(999)999-9999</span>
-                <input className="contacts-card__field name-field__item" onChange={ (e) => this.changeFormData('phone', e.target.value) }
-                  name="phone" placeholder="Phone number here" type="tel" required='true' pattern="[\+]\d{1}[\(]\d{3}[\)]\d{3}[\-]\d{4}" value={ phone }
+                <input className="contacts-card__field name-field__item" onChange={ (e) => this.numbOnly(e.target.value) ? this.changeFormData('phone', e.target.value) : {} }
+                  name="phone" placeholder="Phone number (optional)" type="tel" pattern="[\+]\d{1}[\(]\d{3}[\)]\d{3}[\-]\d{4}" value={ phone } maxLength="20"
                 />
               </div>
 
               <div className="contacts-card__item email-field">
                 <span className="contacts-card__tip">For example: example@gmail.com</span>
                 <input className="contacts-card__field email-field__item" onChange={ (e) => this.changeFormData('email', e.target.value) }
-                  name="email" placeholder="Email address here"  type="email" required='true' value={ email }
+                  name="email" placeholder="Email address"  type="email" required='true' value={ email } maxLength="20"
                 />
               </div>
             </div>
             <div className="contacts-card__inner">
               <label className="contacts-card__field file-field">
-                <input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" onChange={ this.handleFileLoad.bind(this) } />
+                <input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" onChange={ this.handleFileLoad.bind(this) } maxLength="20"/>
                 {
                   imgError ?
                   'Image must be 500x500! Try again! or must be jpg, png or jpeg' :

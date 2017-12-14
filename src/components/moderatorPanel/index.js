@@ -72,7 +72,7 @@ export default class ModeratorPanel extends Component {
                     { invite.doc.surname }
                   </div>
                   <div className="invite__item invite__phone">
-                    { invite.doc.phone }
+                    { invite.doc.phone ? invite.doc.phone : '-' }
                   </div>
                   <div className="invite__item invite__email">
                     { invite.doc.email }
