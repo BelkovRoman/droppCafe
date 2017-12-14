@@ -1,7 +1,7 @@
 # droppCafe
-This app is a test-quest. You can see demo on: https://dropp-cafe.herokuapp.com/
-Password: '123qwe'
-P.S. I'm using a free account of https://www.smileupps.com/ and server-size will be unavailable starting in 13 December. Don't be surprised if come to test too late c:
+1. This app is a test-quest. You can see demo on: https://dropp-cafe.herokuapp.com/
+2. Password: '123qwe'
+3. I'm using a free account of https://www.smileupps.com/ and server-size will be unavailable starting in 13 December. Don't be surprised if come to test too late c:
 
 ## Technologies
 1. React, react-router on client-side
