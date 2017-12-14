@@ -48,27 +48,35 @@ export default class Contacts extends Component {
     let params = {}
     let err = false
 
-    reader.readAsDataURL(file)
+    if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
+      reader.readAsDataURL(file)
 
-    reader.onload = () => {
-      i.src = reader.result
-      i.onload = () => {
-        params = {
-          width: i.width,
-          height: i.height
+      reader.onload = () => {
+        i.src = reader.result
+        i.onload = () => {
+          params = {
+            width: i.width,
+            height: i.height
+          }
+
+          console.log(file.type)
+
+          if (params.height < 501 && params.width < 501) {
+            this.changeFormData('image', reader.result)
+            err = false
+          } else {
+            err = true
+          }
+
+          this.setState({
+            imgError: err
+          })
         }
-
-        if (params.height < 501 && params.width < 501) {
-          this.changeFormData('image', reader.result)
-          err = false
-        } else {
-          err = true
-        }
-
-        this.setState({
-          imgError: err
-        })
       }
+    } else {
+      this.setState({
+        imgError: true
+      })
     }
   }
 
@@ -120,7 +128,7 @@ export default class Contacts extends Component {
                 <input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" onChange={ this.handleFileLoad.bind(this) } />
                 {
                   imgError ?
-                  'Image must be 500x500! Try again!' :
+                  'Image must be 500x500! Try again! or must be jpg, png or jpeg' :
                   (image !== '' ? 'Image was uploaded!' : 'Click to upload some avatar')
                 }
               </label>
