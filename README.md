@@ -24,4 +24,5 @@ npm install
 ```sh
 npm start
 ```
-8. Test it!
+8. Password to modelPanel is 'admin'.
+9. Test it!
