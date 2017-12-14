@@ -16,6 +16,9 @@ npm install
 4. CouchDB must be running on http://localhost:5984
 5. Go to http://localhost:5984/_utils/ (somewhere about)
 6. Create a database with name 'invites'
+7. Go to http://localhost:5984/_utils/#_config/nonode@nohost/cors
+8. Disable CORS
+9. Choose checkbox with label 'All domains ( * )'
 7. Then in main project directory write in teminal:
 ```sh
 npm start
