@@ -8,6 +8,7 @@ This app is a test-quest.
 
 ## How to launch
 1. Download ZIP-file and extract or clone through git
+2. Download NodeJS and install it. To do it go to https://nodejs.org/en/
 2. Get into main directory and write in teminal:
 ```sh
 npm install
