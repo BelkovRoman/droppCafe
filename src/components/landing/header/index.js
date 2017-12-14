@@ -10,7 +10,9 @@ export default class Header extends Component {
   }
 
   state = {
-    isPassInputShowed: false
+    isPassInputShowed: false,
+    isPassCorrect: true,
+    value: ''
   }
 
   showPassInput = () => {
@@ -20,12 +22,40 @@ export default class Header extends Component {
     })
   }
 
-  isPassCorrect = (e) => {
-    if (e.key === 'Enter' && this.props.login(e.target.value)) {
+  onPassChange = (e) => {
+    this.setState({
+      value: e.target.value
+    })
+  }
+
+  submitPass = () => {
+    if (this.props.login(this.state.value)) {
       this.setState({
-        isLogInShowed: true
+        isLogInShowed: true,
+        isPassCorrect: true
+      })
+    } else {
+      this.setState({
+        isPassCorrect: false
       })
     }
+  }
+
+  renderLink = () =>
+      <Link className="menu__item" to={`/modpanel`}>Get in!</Link>
+
+  renderPass = () => {
+    return (
+      this.state.isPassInputShowed ? (
+        <div className="header__passContainer">
+          <span className="menu__item">
+            { this.state.isPassCorrect ? 'Write password' : 'Wrong password!' }
+          </span>
+          <input className="header__input" type="password" onChange={ (e) => this.onPassChange(e) } maxLength="10"/>
+          <div className="header__button" type="submit" onClick={ () => this.submitPass() }>CHECK</div>
+        </div>
+      ) : <span className="menu__item" onClick={ () => this.showPassInput() }>Log in</span>
+    )
   }
 
   render () {
@@ -36,15 +66,7 @@ export default class Header extends Component {
             DR<span className="header__title_red">0</span>PP
           </h1>
           <nav className="header__menu">
-            {
-              this.state.isLogInShowed ? <Link className="menu__item" to={`/modpanel`}>Get in!</Link> : (
-                this.state.isPassInputShowed ? <div>
-                  <span className="menu__item">Пароль:</span>
-                  <input type="password" autoComplete="current-password" onKeyPress={ (e) => this.isPassCorrect(e) } maxLength="20"/>
-                </div> : <span className="menu__item" onClick={ () => this.showPassInput() }>
-                Log in</span>
-              )
-            }
+            { this.state.isLogInShowed ? this.renderLink() : this.renderPass() }
           </nav>
         </div>
       </header>

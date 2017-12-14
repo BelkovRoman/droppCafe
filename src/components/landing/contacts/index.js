@@ -14,12 +14,23 @@ export default class Contacts extends Component {
       image: '',
       message: ''
     },
+    isServerOn: true,
     imgError: false,
     isSended: false
   }
 
+  checkServer = (value = '') => {
+    this.setState({
+      isServerOn: !!value
+    })
+  }
+
+  componentDidMount() {
+    invites.getUUD(this.checkServer)
+  }
+
   handleSubmit = (e) => {
-    const isAllOk = !this.state.data.imgError && this.state.data.image !== ''
+    const isAllOk = !this.state.imgError && this.state.data.image !== ''
 
     this.setState({
       data: {
@@ -37,6 +48,10 @@ export default class Contacts extends Component {
           isSended: false
         })
       }, 2000)
+    } else {
+      this.setState({
+        imgError: true
+      })
     }
     e.preventDefault()
   }
@@ -59,8 +74,6 @@ export default class Contacts extends Component {
             width: i.width,
             height: i.height
           }
-
-          console.log(file.type)
 
           if (params.height < 501 && params.width < 501) {
             this.changeFormData('image', reader.result)
@@ -85,9 +98,16 @@ export default class Contacts extends Component {
     return /^[a-zA-Z]+$/.test(value)
   }
 
-  numbOnly = (value) => {
-    // return /^[1-9]+$/.test(value)
-    return true
+  phoneNumberHandler = (value) => {
+
+    value = value.replace(/\D/g, "")
+    value = value.replace(/8/g, "")
+    value = value.replace(/^(\d\d\d)(\d)/g, "($1)$2")
+
+    if (value.length < 14) value = value.replace(/(\d{3})(\d)/, "$1-$2")
+    else value = value.replace(/(\d{3})(\d)/, "$1-$2")
+
+    this.changeFormData('phone', '8' + value)
   }
 
   changeFormData = (key, value) => {
@@ -99,9 +119,96 @@ export default class Contacts extends Component {
     })
   }
 
+  renderNameSurname = () => {
+    const { name, surname } = this.state.data
+
+    return (
+      <div className="contacts-card__inner">
+        <input className="contacts-card__field name-field"
+          onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('name', e.target.value) : {} }
+          name="name" placeholder="Your name" type="text" required='true' value={ name } maxLength="20"
+        />
+        <input className="contacts-card__field email-field"
+          onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('surname', e.target.value) : {} }
+          name="surName" placeholder="Your surname"  type="text" required='true' value={ surname } maxLength="20"
+        />
+      </div>
+    )
+  }
+
+  renderPhoneEmail = () => {
+    const { phone, email } = this.state.data
+
+    return (
+      <div className="contacts-card__inner">
+        <div className="contacts-card__item name-field">
+          <span className="contacts-card__tip">For example: 8(234)243-2342</span>
+          <input className="contacts-card__field name-field__item"
+            onChange={ (e) => this.phoneNumberHandler(e.target.value) }
+            name="phone" placeholder="Phone number (optional)" type="tel"
+            pattern="\d{1}[\(]\d{3}[\)]\d{3}[\-]\d{4}" value={ phone } maxLength="14"
+          />
+        </div>
+
+        <div className="contacts-card__item email-field">
+          <span className="contacts-card__tip">For example: example@gmail.com</span>
+          <input className="contacts-card__field email-field__item"
+            onChange={ (e) => this.changeFormData('email', e.target.value) }
+            name="email" placeholder="Email address"  type="email" required='true'
+            value={ email } maxLength="20"
+          />
+        </div>
+      </div>
+    )
+  }
+
+  renderFileUploader = () => {
+    const { image } = this.state.data
+    const { imgError } = this.state
+
+    return (
+      <div className="contacts-card__inner">
+        <label className="contacts-card__field file-field">
+          <input type="file" name="image_uploads" accept=".jpg, .jpeg, .png"
+            onChange={ this.handleFileLoad.bind(this) } maxLength="20"
+          />
+          {
+            imgError ?
+            <span className="file-field__label_red">Image must be 500x500 and jpg, png or jpeg</span> :
+            (image !== '' ? 'Image was uploaded!' : 'Click to upload some avatar')
+          }
+        </label>
+      </div>
+    )
+  }
+
+  renderMessage = () => {
+    const { message } = this.state.data
+
+    return (
+      <div className="contacts-card__inner">
+        <textarea className="contacts-card__field message-field"
+          onChange={ (e) => this.changeFormData('message', e.target.value) }
+          name="message" placeholder="Describe yourself" required='true' value={ message }
+        ></textarea>
+      </div>
+    )
+  }
+
+  renderChecking = () => {
+    return (
+      <div className="contacts-card__inner contacts-card__inner_checking">
+        <span>Are you robot?</span>
+        <div className="contacts-card__capcha">
+          <input type="checkbox" required='true' />
+          <span>I'm mr.robot</span>
+        </div>
+      </div>
+    )
+  }
+
   render () {
-    const { name, surname, phone, email, message, image } = this.state.data
-    const { imgError, isSended } = this.state
+    const { isServerOn, isSended } = this.state
 
     return (
       <section id="contacts" className="contacts">
@@ -110,54 +217,21 @@ export default class Contacts extends Component {
         </h2>
         <div className="contacts__inner">
           <form className="contacts-card" onSubmit={ this.handleSubmit }>
-            <div className="contacts-card__inner">
-              <input className="contacts-card__field name-field" onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('name', e.target.value) : {} }
-                name="name" placeholder="Your name" type="text" required='true' value={ name } maxLength="20"
-              />
-            <input className="contacts-card__field email-field" onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('surname', e.target.value) : {} }
-                name="surName" placeholder="Your surname"  type="text" required='true' value={ surname } maxLength="20"
-              />
-            </div>
-            <div className="contacts-card__inner">
-              <div className="contacts-card__item name-field">
-                <span className="contacts-card__tip">For example: +9(999)999-9999</span>
-                <input className="contacts-card__field name-field__item" onChange={ (e) => this.numbOnly(e.target.value) ? this.changeFormData('phone', e.target.value) : {} }
-                  name="phone" placeholder="Phone number (optional)" type="tel" pattern="[\+]\d{1}[\(]\d{3}[\)]\d{3}[\-]\d{4}" value={ phone } maxLength="20"
-                />
-              </div>
-
-              <div className="contacts-card__item email-field">
-                <span className="contacts-card__tip">For example: example@gmail.com</span>
-                <input className="contacts-card__field email-field__item" onChange={ (e) => this.changeFormData('email', e.target.value) }
-                  name="email" placeholder="Email address"  type="email" required='true' value={ email } maxLength="20"
-                />
-              </div>
-            </div>
-            <div className="contacts-card__inner">
-              <label className="contacts-card__field file-field">
-                <input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" onChange={ this.handleFileLoad.bind(this) } maxLength="20"/>
-                {
-                  imgError ?
-                  'Image must be 500x500! Try again! or must be jpg, png or jpeg' :
-                  (image !== '' ? 'Image was uploaded!' : 'Click to upload some avatar')
-                }
-              </label>
-            </div>
-            <div className="contacts-card__inner">
-              <textarea className="contacts-card__field message-field" onChange={ (e) => this.changeFormData('message', e.target.value) }
-                name="message" placeholder="Describe yourself" required='true' value={ message }
-              ></textarea>
-            </div>
-            <div className="contacts-card__inner contacts-card__inner_checking">
-              <span>Are you robot?</span>
-              <div className="contacts-card__capcha">
-                <input type="checkbox" required='true' />
-                <span>I'm mr.robot</span>
-              </div>
-            </div>
-            <button className="contacts__button">
-            { isSended ? 'MESSAGE SENDED!' : 'SEND MESSAGE NOW' }
-            </button>
+            { this.renderNameSurname() }
+            { this.renderPhoneEmail() }
+            { this.renderFileUploader() }
+            { this.renderMessage() }
+            { this.renderChecking() }
+            { isServerOn ? (
+                <button className='contacts__button'>
+                  { isSended ? 'MESSAGE SENDED!' : 'SEND MESSAGE NOW' }
+                </button>
+              ) : (
+                <div className='contacts__button contacts__button_disabled'>
+                  SERVER OFFLINE. SENDING MESSAGES DISABLED
+                </div>
+              )
+            }
           </form>
         </div>
         <div className="add-info">

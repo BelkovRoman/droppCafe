@@ -1,12 +1,11 @@
-const url = 'http://192.168.111.170:5984'
+const url = 'https://couchdb-1e730f.smileupps.com'
 
 function getUUD(resolve) {
   fetch(`${url}/_uuids`)
     .then((response) => response.json())
     .then(responseJson => {
-      console.log(responseJson.uuids[0])
       resolve(responseJson.uuids[0])
-    });
+    })
 }
 
 function putData(data, uuids) {
@@ -21,7 +20,7 @@ function putData(data, uuids) {
     .then((response) => response.json())
     .then(responseJson => {
       console.log(responseJson)
-    });
+    })
 }
 
 export default {
@@ -35,5 +34,22 @@ export default {
       .then(data => {
         resolve(data)
       })
+  },
+
+  getPass (resolve) {
+    fetch(`${url}/password/_all_docs?include_docs=true`)
+      .then((response) => response.json())
+      .then(data => {
+        resolve(data)
+      })
+  },
+
+  getUUD(resolve) {
+    fetch(`${url}/_uuids`)
+      .then((response) => response.json())
+      .then(responseJson => {
+        resolve(responseJson.uuids[0])
+      })
+      .catch( resolve('') );
   }
 }

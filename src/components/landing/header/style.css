@@ -27,14 +27,49 @@
 	color: #fd5433;
 }
 
+.header__passContainer {
+	display: flex;
+	align-items: center;
+}
+
 .header__menu {
 	display: flex;
 	text-transform: uppercase;
 }
 
+.header__input {
+	height: 25px;
+	width: 125px;
+  box-sizing: border-box;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-right: 10px;
+}
+
+.header__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	border: none;
+	color: #fff;
+  width: 100px;
+  height: 25px;
+  font-size: 16px;
+  cursor: pointer;
+	user-select: none;
+	background-color: #fd5433;
+	border-radius: 5px;
+	transition: all 0.4s ease-in 0s;
+}
+
+.header__button:hover{
+	background-color: #c2432a;
+}
+
 .menu__item {
 	cursor: pointer;
 	color: #000;
+	text-transform: uppercase;
 	text-decoration: none;
 	padding: 10px 20px;
 	transition: all 0.4s ease-in 0s;
