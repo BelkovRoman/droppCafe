@@ -31,6 +31,7 @@ export default class Contacts extends Component {
 
     if (isAllOk) {
       invites.sendData({ ...this.state.data })
+      alert('Message sended')
       setTimeout(() => {
         this.setState({
           isSended: false
@@ -63,7 +64,6 @@ export default class Contacts extends Component {
 
           if (params.height < 501 && params.width < 501) {
             this.changeFormData('image', reader.result)
-            alert('Message sended')
             err = false
           } else {
             err = true
@@ -86,7 +86,8 @@ export default class Contacts extends Component {
   }
 
   numbOnly = (value) => {
-    return /^[1-9]+$/.test(value)
+    // return /^[1-9]+$/.test(value)
+    return true
   }
 
   changeFormData = (key, value) => {

@@ -1,5 +1,7 @@
+const url = 'http://192.168.111.170:5984'
+
 function getUUD(resolve) {
-  fetch('http://localhost:5984/_uuids')
+  fetch(`${url}/_uuids`)
     .then((response) => response.json())
     .then(responseJson => {
       console.log(responseJson.uuids[0])
@@ -8,7 +10,7 @@ function getUUD(resolve) {
 }
 
 function putData(data, uuids) {
-  return fetch(`http://localhost:5984/invites/${uuids}`, {
+  return fetch(`${url}/invites/${uuids}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -28,7 +30,7 @@ export default {
   },
 
   getData (resolve) {
-    fetch('http://localhost:5984/invites/_all_docs?include_docs=true')
+    fetch(`${url}/invites/_all_docs?include_docs=true`)
       .then((response) => response.json())
       .then(data => {
         resolve(data)
