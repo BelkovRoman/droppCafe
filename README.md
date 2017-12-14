@@ -14,7 +14,10 @@ npm install
 ```
 3. After go to http://couchdb.apache.org/ and follow instructions for your OS
 4. CouchDB must be running on http://localhost:5984
-5. Then in main project directory write in teminal:
+5. Go to http://localhost:5984/_utils/ (somewhere about)
+6. Create a database with name 'invites'
+7. Then in main project directory write in teminal:
 ```sh
 npm start
 ```
+8. Test it!
