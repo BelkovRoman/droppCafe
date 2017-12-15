@@ -60,7 +60,7 @@
 
 .contacts-card__field {
 	box-sizing: border-box;
-	border: none;
+	border: 1px solid #000;
 	font-family: Arial;
 	font-style: italic;
 	background-color: #fff;

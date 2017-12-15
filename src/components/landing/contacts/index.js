@@ -63,39 +63,44 @@ export default class Contacts extends Component {
 
     let params = {}
     let err = false
+    if (file.type) {
+      if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
+        reader.readAsDataURL(file)
 
-    if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
-      reader.readAsDataURL(file)
+        reader.onload = () => {
+          i.src = reader.result
+          i.onload = () => {
+            params = {
+              width: i.width,
+              height: i.height
+            }
 
-      reader.onload = () => {
-        i.src = reader.result
-        i.onload = () => {
-          params = {
-            width: i.width,
-            height: i.height
+            if (params.height < 501 && params.width < 501) {
+              this.changeFormData('image', reader.result)
+              err = false
+            } else {
+              err = true
+            }
+
+            this.setState({
+              imgError: err
+            })
           }
-
-          if (params.height < 501 && params.width < 501) {
-            this.changeFormData('image', reader.result)
-            err = false
-          } else {
-            err = true
-          }
-
-          this.setState({
-            imgError: err
-          })
         }
+      } else {
+        this.setState({
+          imgError: true
+        })
       }
-    } else {
-      this.setState({
-        imgError: true
-      })
     }
   }
 
   alphaOnly = (value) => {
     return /^[a-zA-Z]+$/.test(value)
+  }
+
+  messageChecker = (value) => {
+    return /^[a-zA-Z, ' ']+$/.test(value)
   }
 
   phoneNumberHandler = (value) => {
@@ -124,14 +129,20 @@ export default class Contacts extends Component {
 
     return (
       <div className="contacts-card__inner">
-        <input className="contacts-card__field name-field"
-          onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('name', e.target.value) : {} }
-          name="name" placeholder="Your name" type="text" required='true' value={ name } maxLength="20"
-        />
-        <input className="contacts-card__field email-field"
-          onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('surname', e.target.value) : {} }
-          name="surName" placeholder="Your surname"  type="text" required='true' value={ surname } maxLength="20"
-        />
+        <div className="contacts-card__item name-field">
+          <span className="contacts-card__tip">Name should contain A-Z a-z</span>
+          <input className="contacts-card__field name-field__item"
+            onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('name', e.target.value) : {} }
+            name="name" placeholder="Your name" type="text" required='true' value={ name } maxLength="20"
+          />
+        </div>
+        <div className="contacts-card__item email-field">
+          <span className="contacts-card__tip">Surname should contain A-Z a-z</span>
+          <input className="contacts-card__field email-field__item"
+            onChange={ (e) => this.alphaOnly(e.target.value) ? this.changeFormData('surname', e.target.value) : {} }
+            name="surName" placeholder="Your surname"  type="text" required='true' value={ surname } maxLength="20"
+          />
+        </div>
       </div>
     )
   }
@@ -174,7 +185,7 @@ export default class Contacts extends Component {
           />
           {
             imgError ?
-            <span className="file-field__label_red">Image must be 500x500 and jpg, png or jpeg</span> :
+            <span className="file-field__label_red">Image must exist or must be 500x500 and jpg, png or jpeg</span> :
             (image !== '' ? 'Image was uploaded!' : 'Click to upload some avatar')
           }
         </label>
@@ -187,10 +198,13 @@ export default class Contacts extends Component {
 
     return (
       <div className="contacts-card__inner">
-        <textarea className="contacts-card__field message-field"
-          onChange={ (e) => this.changeFormData('message', e.target.value) }
-          name="message" placeholder="Describe yourself" required='true' value={ message }
-        ></textarea>
+        <div className="contacts-card__item">
+          <span className="contacts-card__tip">Message should contain only A-Z, a-z and spaces</span>
+          <textarea className="contacts-card__field message-field"
+            onChange={ (e) => this.messageChecker(e.target.value) ? this.changeFormData('message', e.target.value) : {} }
+            name="message" placeholder="Describe yourself" required='true' value={ message }
+          ></textarea>
+        </div>
       </div>
     )
   }
